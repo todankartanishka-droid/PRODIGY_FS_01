@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+
+<style>
+body{
+font-family:Arial;
+background:linear-gradient(135deg,#11998e,#38ef7d);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+}
+
+.container{
+background:white;
+padding:40px;
+border-radius:12px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+button{
+padding:10px 20px;
+background:#11998e;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+margin-top:15px;
+display:block;
+margin-left:auto;
+margin-right:auto;
+}
+
+.logout-btn{
+background:#dc3545;
+}
+
+.logout-btn:hover{
+background:#c82333;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Welcome</h2>
+
+<p>You are logged in successfully.</p>
+
+<p id="roleText"></p>
+
+<div id="adminPanel"></div>
+
+<button class="logout-btn" onclick="logout()">
+Logout
+</button>
+
+</div>
+
+<script>
+
+const token =
+localStorage.getItem("token");
+
+if(!token){
+
+alert("Please login first");
+
+window.location.href="/login";
+
+}
+
+const role =
+localStorage.getItem("role");
+
+document.getElementById(
+"roleText"
+).innerHTML =
+"Role: " + role;
+
+if(role==="admin"){
+
+document.getElementById(
+"adminPanel"
+).innerHTML = `
+<h3>Admin Panel</h3>
+<button onclick="manageUsers()">
+Manage Users
+</button>
+`;
+
+}
+
+function manageUsers(){
+window.location.href="/users";
+}
+
+function logout(){
+
+localStorage.removeItem("token");
+
+localStorage.removeItem("role");
+
+window.location.href="/login";
+
+}
+</script>
+
+</body>
+</html>

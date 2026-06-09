@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Manage Users</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:linear-gradient(135deg,#4facfe,#00f2fe);
+margin:0;
+padding:20px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+h1{
+text-align:center;
+color:#333;
+}
+
+.summary{
+background:#f8f9fa;
+padding:15px;
+border-radius:10px;
+text-align:center;
+font-size:18px;
+font-weight:bold;
+margin-bottom:20px;
+}
+
+.user-card{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#eef4ff;
+padding:15px;
+margin-bottom:15px;
+border-radius:10px;
+}
+
+.user-info{
+text-align:left;
+}
+
+.role{
+font-weight:bold;
+color:#11998e;
+}
+
+.btn{
+background:#11998e;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.btn:hover{
+background:#0e8076;
+}
+
+.back-btn{
+display:block;
+width:220px;
+margin:25px auto;
+text-align:center;
+background:#667eea;
+color:white;
+padding:12px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+}
+
+.back-btn:hover{
+background:#5563d6;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Admin User Management</h1>
+
+<div class="summary" id="totalUsers">
+Total Users: 0
+</div>
+
+<div id="usersContainer"></div>
+
+<a href="/dashboard" class="back-btn">
+⬅ Back To Dashboard
+</a>
+
+</div>
+
+<script>
+
+    function viewUser(email, role){
+
+alert(
+"User Details\n\n" +
+"Email: " + email + "\n" +
+"Role: " + role
+);
+
+}
+
+async function loadUsers(){
+
+const response = await fetch("/api/users");
+
+const users = await response.json();
+
+document.getElementById("totalUsers").innerHTML =
+"Total Users: " + users.length;
+
+let html = "";
+
+users.forEach(user => {
+
+html += `
+<div class="user-card">
+
+<div class="user-info">
+<h3>${user.email}</h3>
+<p class="role">Role: ${user.role}</p>
+</div>
+
+<button class="btn"
+onclick="viewUser('${user.email}','${user.role}')">
+View Details
+</button>
+
+</div>
+`;
+
+});
+
+document.getElementById("usersContainer").innerHTML = html;
+
+}
+
+loadUsers();
+
+</script>
+
+</body>
+</html>

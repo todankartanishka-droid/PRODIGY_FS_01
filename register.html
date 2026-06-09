@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Register</title>
+
+<style>
+body{
+  font-family: Arial;
+  background: linear-gradient(135deg,#667eea,#764ba2);
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin:0;
+}
+
+.container{
+  background:white;
+  padding:30px;
+  border-radius:12px;
+  width:300px;
+  text-align:center;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+input{
+  width:90%;
+  padding:10px;
+  margin:8px 0;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  background:#667eea;
+  color:white;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#5a67d8;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Create Account</h2>
+
+<input id="email" placeholder="Enter Email">
+
+<input id="password" type="password" placeholder="Enter Password">
+
+<button onclick="register()">Register</button>
+
+<p style="margin-top:15px;">
+Already have an account?
+<a href="/login">Login</a>
+</p>
+
+</div>
+
+<script>
+async function register() {
+const email=document.getElementById("email").value;
+const password=document.getElementById("password").value;
+
+const response=await fetch("/register",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({email,password})
+});
+
+const data=await response.json();
+
+alert(data.message);
+
+window.location.href="/login";
+}
+</script>
+
+</body>
+</html>
